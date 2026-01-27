@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__unity-synaptic__unity_create_folder",
+      "mcp__unity-synaptic__unity_get_project_stats"
+    ]
+  }
+}
