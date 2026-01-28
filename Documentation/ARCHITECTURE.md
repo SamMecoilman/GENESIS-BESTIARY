@@ -269,8 +269,47 @@ public class ArmorData : ScriptableObject
 
 ---
 
+## 10. 使用アセット（無料・商用可）
+
+### 必須アセット
+
+| アセット | 用途 | 入手先 |
+|----------|------|--------|
+| Starter Assets - Third Person | プレイヤー移動・カメラ | Unity Asset Store |
+| Cinemachine | カメラ制御 | Package Manager |
+| Input System | 入力処理 | Package Manager |
+| DOTween (HOTween v2) | UIアニメーション | Unity Asset Store |
+| TextMeshPro | UI文字表示 | Package Manager |
+
+### Phase 4で追加
+
+| アセット | 用途 | 入手先 |
+|----------|------|--------|
+| Mirror | ネットワーク | Unity Asset Store |
+
+### 推奨（任意）
+
+| アセット | 用途 | 入手先 |
+|----------|------|--------|
+| Mixamo | キャラクター・アニメーション | mixamo.com |
+| Unity Particle Pack | エフェクト素材 | Unity Asset Store |
+
+### 自前実装（置き換えない）
+
+| スクリプト | 理由 |
+|-----------|------|
+| StateMachine | MH特有の状態遷移が多い |
+| PlayerCombat | コンボ・モーション値など独自仕様 |
+| MonsterController | MH特有のAI（怒り・疲労等） |
+| DamageCalculator | MH準拠のダメージ計算式 |
+| CarvingPoint | 剥ぎ取り独自仕様 |
+| QuestManager | クエスト独自仕様 |
+
+---
+
 ## 更新履歴
 
 | 日付 | 内容 |
 |------|------|
+| 2025-01-28 | 使用アセット一覧追加 |
 | 2025-01-27 | 初版作成 |

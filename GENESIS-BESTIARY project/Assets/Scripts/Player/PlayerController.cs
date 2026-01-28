@@ -1,5 +1,6 @@
 using GenesisBestiary.Combat;
 using UnityEngine;
+using System.Linq;
 
 namespace GenesisBestiary.Player
 {
@@ -21,10 +22,18 @@ namespace GenesisBestiary.Player
         private float staminaRegenTimer;
         private float dodgeCooldownTimer;
         private bool isInvincible;
+        private bool isDead;
         
         // Input
         private bool attackInput;
         private bool dodgeInput;
+        private bool carveInput;
+        
+        // Carving
+        private CarvingPoint currentCarvingPoint;
+
+        // Events
+        public System.Action OnDied;
 
         #region Properties
         public PlayerData Data => data;
@@ -36,6 +45,8 @@ namespace GenesisBestiary.Player
         
         public bool AttackInput => attackInput;
         public bool DodgeInput => dodgeInput;
+        public bool CarveInput => carveInput;
+        public CarvingPoint CurrentCarvingPoint => currentCarvingPoint;
         
         public bool CanDodge => currentStamina >= data.dodgeStaminaCost && 
                                 dodgeCooldownTimer <= 0f;
@@ -72,6 +83,7 @@ namespace GenesisBestiary.Player
             
             currentHealth = data.maxHealth;
             currentStamina = data.maxStamina;
+            isDead = false;
         }
 
         private void Update()
@@ -101,12 +113,43 @@ namespace GenesisBestiary.Player
             {
                 dodgeInput = true;
             }
+            
+            // Carve input (E key or interact button)
+            carveInput = Input.GetKey(KeyCode.E);
+            
+            // Check for carve start
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                TryStartCarving();
+            }
         }
         
         private void ClearInputs()
         {
             attackInput = false;
             dodgeInput = false;
+            // Note: carveInput is not cleared as it's held
+        }
+        
+        private void TryStartCarving()
+        {
+            // Find nearby carving points
+            var carvingPoints = Physics.OverlapSphere(transform.position, 3f)
+                .Select(c => c.GetComponent<CarvingPoint>())
+                .Where(cp => cp != null && cp.CanCarve)
+                .OrderBy(cp => Vector3.Distance(transform.position, cp.transform.position))
+                .ToArray();
+            
+            if (carvingPoints.Length > 0)
+            {
+                currentCarvingPoint = carvingPoints[0];
+                stateMachine.RequestStateChange(PlayerState.Carve);
+            }
+        }
+        
+        public void ClearCarvingPoint()
+        {
+            currentCarvingPoint = null;
         }
         
         private void UpdateTimers()
@@ -204,6 +247,7 @@ namespace GenesisBestiary.Player
         #region IDamageable
         public void TakeDamage(int damage, Vector3 sourcePosition)
         {
+            if (isDead) return;
             if (isInvincible) return;
             
             currentHealth -= damage;
@@ -222,6 +266,9 @@ namespace GenesisBestiary.Player
         
         private void Die()
         {
+            if (isDead) return;
+            isDead = true;
+            OnDied?.Invoke();
             Debug.Log("Player died!");
             stateMachine.RequestStateChange(PlayerState.Dead);
         }

@@ -5,7 +5,7 @@
 
 ---
 
-## 現在のPhase: **Phase 0（設計固定）**
+## 現在のPhase: **Phase 1（縦切りコア）** → コード完成、テスト待ち
 
 ---
 
@@ -31,24 +31,28 @@
 
 ---
 
-## Phase 1: 縦切りコア ⏳ 未開始
+## Phase 1: 縦切りコア ✅ コード完成
 
 ### 完了タスク
 
-（なし）
+| 日付 | タスク | 備考 |
+|------|--------|------|
+| 2025-01-27 | Unityプロジェクト設定 | 3D設定済み |
+| 2025-01-27 | フォルダ構造作成 | ARCHITECTURE.mdに従った構造 |
+| 2025-01-27 | プレイヤー移動 | PlayerController, PlayerStateMachine |
+| 2025-01-27 | プレイヤー攻撃 | PlayerCombat, AttackData, 3段コンボ |
+| 2025-01-27 | プレイヤー回避 | PlayerDodgeState, 無敵フレーム |
+| 2025-01-27 | モンスターAI | MonsterController, MonsterStateMachine |
+| 2025-01-27 | ダメージシステム | DamageCalculator, IDamageable |
+| 2025-01-27 | 剥ぎ取り | CarvingPoint, PlayerCarveState |
+| 2025-01-27 | クエストシステム | QuestManager, QuestData |
+| 2025-01-27 | HUD | HUDManager |
+| 2025-01-27 | 結果画面 | QuestResultUI |
 
 ### 残りタスク
 
-- [ ] Unityプロジェクト設定（3D化）
-- [ ] フォルダ構造作成
-- [ ] プレイヤー移動
-- [ ] プレイヤー攻撃（大剣コンボ）
-- [ ] プレイヤー回避
-- [ ] モンスター1体（基本AI）
-- [ ] マップ1面（3エリア）
-- [ ] 剥ぎ取り基本
-- [ ] クエスト進行
-- [ ] 仮UI
+- [ ] Unityでテストプレイ
+- [ ] バグ修正・調整
 
 ---
 

@@ -3,7 +3,7 @@
     "unity-synaptic": {
       "command": "node",
       "args": [
-        "D:/Git/GENESIS-BESTIARY/GENESIS-BESTIARY project/Assets/Synaptic AI Pro/MCPServer/index-supersave.js"
+        "D:/Git/GENESIS-BESTIARY/GENESIS-BESTIARY project/Assets/Synaptic AI Pro/MCPServer/index.js"
       ],
       "env": {}
     }

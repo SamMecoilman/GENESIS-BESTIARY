@@ -757,9 +757,7 @@ npm start
                 "/usr/local/Cellar",      // Homebrew Cellar direct
                 "/Users/" + Environment.UserName + "/.nvm/versions/node", // NVM
                 "/Users/" + Environment.UserName + "/.volta/bin",         // Volta
-                "/Users/" + Environment.UserName + "/.npm-global/bin",     // npm global
-                "D:/nvm",                     // Windows NVM
-                "D:/Git/bin"               // Windows Git
+                "/Users/" + Environment.UserName + "/.npm-global/bin"     // npm global
             };
             
             foreach (var basePath in commonPaths)

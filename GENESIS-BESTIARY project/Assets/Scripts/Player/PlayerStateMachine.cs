@@ -1,3 +1,4 @@
+using GenesisBestiary.Combat;
 using GenesisBestiary.Utilities;
 using UnityEngine;
 
@@ -22,6 +23,8 @@ namespace GenesisBestiary.Player
             States[PlayerState.Move] = new PlayerMoveState(this, controller);
             States[PlayerState.Attack] = new PlayerAttackState(this, controller);
             States[PlayerState.Dodge] = new PlayerDodgeState(this, controller);
+            States[PlayerState.Carve] = new PlayerCarveState(this, controller);
+            States[PlayerState.Dead] = new PlayerDeadState(this, controller);
             ChangeState(PlayerState.Idle);
         }
 
@@ -228,6 +231,108 @@ namespace GenesisBestiary.Player
             public void Exit()
             {
                 controller.SetInvincible(false);
+            }
+        }
+        #endregion
+
+        #region Carve State
+        private sealed class PlayerCarveState : IState
+        {
+            private readonly PlayerStateMachine stateMachine;
+            private readonly PlayerController controller;
+            private CarvingPoint currentCarvingPoint;
+
+            public PlayerCarveState(PlayerStateMachine stateMachine, PlayerController controller)
+            {
+                this.stateMachine = stateMachine;
+                this.controller = controller;
+            }
+
+            public void Enter()
+            {
+                currentCarvingPoint = controller.CurrentCarvingPoint;
+                if (currentCarvingPoint != null)
+                {
+                    currentCarvingPoint.StartCarving();
+                    currentCarvingPoint.OnCarveComplete += OnCarveComplete;
+                }
+            }
+
+            public void Tick()
+            {
+                if (currentCarvingPoint == null)
+                {
+                    stateMachine.ChangeState(PlayerState.Idle);
+                    return;
+                }
+
+                currentCarvingPoint.UpdateCarving(Time.deltaTime);
+
+                // Cancel if player inputs movement or dodge
+                if (controller.HasMoveInput || controller.DodgeInput)
+                {
+                    currentCarvingPoint.CancelCarving();
+                    stateMachine.ChangeState(PlayerState.Idle);
+                }
+            }
+
+            public void Exit()
+            {
+                if (currentCarvingPoint != null)
+                {
+                    currentCarvingPoint.OnCarveComplete -= OnCarveComplete;
+                }
+                currentCarvingPoint = null;
+            }
+
+            private void OnCarveComplete()
+            {
+                // Check if more carves available
+                if (currentCarvingPoint != null && currentCarvingPoint.CanCarve)
+                {
+                    // Stay in carve state for next carve if player holds button
+                    if (controller.CarveInput)
+                    {
+                        currentCarvingPoint.StartCarving();
+                    }
+                    else
+                    {
+                        stateMachine.ChangeState(PlayerState.Idle);
+                    }
+                }
+                else
+                {
+                    stateMachine.ChangeState(PlayerState.Idle);
+                }
+            }
+        }
+        #endregion
+
+        #region Dead State
+        private sealed class PlayerDeadState : IState
+        {
+            private readonly PlayerStateMachine stateMachine;
+            private readonly PlayerController controller;
+
+            public PlayerDeadState(PlayerStateMachine stateMachine, PlayerController controller)
+            {
+                this.stateMachine = stateMachine;
+                this.controller = controller;
+            }
+
+            public void Enter()
+            {
+                // Disable player controls
+                Debug.Log("Player entered Dead state");
+            }
+
+            public void Tick()
+            {
+                // Wait for respawn or game over
+            }
+
+            public void Exit()
+            {
             }
         }
         #endregion
