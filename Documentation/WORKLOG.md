@@ -193,3 +193,11 @@ git commit -m "[Phase X] タスク名: 変更内容"
 - [x] 05:22 POV縦可動域を再調整（-40〜25）＆Follow/LookAt再設定
 - [x] 05:24 POV縦可動域を元に戻し（-70〜70）
 - [x] 05:25 POV縦可動域を前状態に戻し（-40〜25）
+- [x] 05:56 FreeLook Orbits 調整（Top 2.6/2.2, Mid 1.4/3.2, Bottom 0.1/4.2）
+- [x] 06:00 FreeLook X軸反転を解除
+- [x] 08:58 FreeLook X軸入力をMouse Xに設定し反転解除
+- [x] 08:59 FreeLook Y軸入力をMouse Yに設定し反転解除
+- [x] 09:05 InputManagerのMouse X/Yを反転（FreeLook反転補正）
+- [x] 09:10 InputManagerのMouse X/Y反転を元に戻し
+- [x] 09:24 UI整理：QuestResultUIを非表示化
+- [x] 09:29 UI重なり対策：InputDebugger無効化 & HunterControllerデバッグUI非表示
