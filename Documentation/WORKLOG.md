@@ -201,3 +201,11 @@ git commit -m "[Phase X] タスク名: 変更内容"
 - [x] 09:10 InputManagerのMouse X/Y反転を元に戻し
 - [x] 09:24 UI整理：QuestResultUIを非表示化
 - [x] 09:29 UI重なり対策：InputDebugger無効化 & HunterControllerデバッグUI非表示
+
+---
+
+## 2026-01-29
+
+### 復旧対応
+
+- [x] 21:00 Temp/__Backupscenes/0.backup から Scene_1.unity を復元
